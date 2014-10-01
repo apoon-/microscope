@@ -15,3 +15,5 @@ if (Posts.find().count() === 0) {
     url: 'http://themeteorbook.com'
   }); 
 }
+
+//seeds server collection upon finding no posts

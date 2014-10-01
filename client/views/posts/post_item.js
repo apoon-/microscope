@@ -5,3 +5,5 @@ Template.postItem.helpers({
     return a.hostname;
   }
 })
+
+//post item helper - formats handlebar {{domain}} to just display hostname
