@@ -1,5 +1,10 @@
 Posts = new Meteor.Collection('posts');
 
+Posts.allow({
+  update: function(userId, post) { return ownsDocument(userId, post); },
+  remove: function(userId, post) { return ownsDocument(userId, post); },
+});
+
 Meteor.methods({
   postInsert: function(postAttributes) {
     check(Meteor.userId(), String);
@@ -7,14 +12,6 @@ Meteor.methods({
       title: String,
       url: String
     });
-
-    if (Meteor.isServer) {
-      postAttributes.title += "(server)";
-      // wait for 5 seconds
-      Meteor._sleepForMs(5000);
-    } else {
-      postAttributes.title += "(client)";
-    }
 
     var postWithSameLink = Posts.findOne({url: postAttributes.url});
     if (postWithSameLink) {
