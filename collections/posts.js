@@ -10,7 +10,14 @@ Posts.deny({
     //may only edit the following two fields:
     return (_.without(fieldNames, 'url', 'title').length > 0);
   }
-})
+});
+
+Posts.deny({
+  update: function(userId, post, fieldNames, modifier) {
+    var errors = validatePost(modifier.$set);
+    return errors.title || errors.url;
+  }
+});
 
 validatePost = function (post) {
   var errors = {};
